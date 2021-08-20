@@ -57,7 +57,7 @@ function closeImg(event) {
     sunflowersGallery.modal.classList.remove("is-open");
     sunflowersGallery.img.src = "";
     window.removeEventListener("keydown", nextOrPrevImg);
-  window.removeEventListener("keydown", keyClose);
+    window.removeEventListener("keydown", keyClose);
   }
 }
 
@@ -65,6 +65,8 @@ function keyClose(event) {
   if (event.key === "Escape") {
     sunflowersGallery.modal.classList.remove("is-open");
     sunflowersGallery.img.src = "";
+    window.removeEventListener("keydown", nextOrPrevImg);
+    window.removeEventListener("keydown", keyClose);
   }
 }
 
