@@ -5,7 +5,7 @@ class Gallery {
     this.img = document.querySelector(imgSelector)
   }
 
-  render(imagesArr) {
+  init(imagesArr) {
     imagesArr.forEach((img) => {
       this.gallery.insertAdjacentHTML(
         "afterbegin",
@@ -28,41 +28,41 @@ class Gallery {
   }
 
   addListeners() {
-    this.gallery.addEventListener("click", this.onClickGallery.bind(this));
-    this.modal.addEventListener("click", this.closeImg.bind(this));
+    this.gallery.addEventListener("click", this.onClickGallery);
+    this.modal.addEventListener("click", this.onCloseImg);
   }
 
-  onClickGallery(event) {
+  onClickGallery = (event) => {
     event.preventDefault();
     if (event.target.nodeName !== "IMG") {
       return;
     }
     this.img.src = event.target.dataset.source;
     this.modal.classList.add("is-open");
-    window.addEventListener("keydown", this.nextOrPrevImg.bind(this));
-    window.addEventListener("keydown", this.keyClose.bind(this));
+    window.addEventListener("keydown", this.nextOrPrevImg);
+    window.addEventListener("keydown", this.keyClose);
   }
 
-  closeImg(event) {
+  onCloseImg = (event) => {
     let node = event.target.nodeName;
     if (node === "BUTTON" || node !== "IMG") {
       this.modal.classList.remove("is-open");
       this.img.src = "";
-      window.removeEventListener("keydown", this.nextOrPrevImg.bind(this));
-      window.removeEventListener("keydown", this.keyClose.bind(this));
+      window.removeEventListener("keydown", this.nextOrPrevImg);
+      window.removeEventListener("keydown", this.keyClose);
     }
   }
 
-  keyClose(event) {
+  keyClose = (event) => {
       if (event.key === "Escape") {
         this.modal.classList.remove("is-open");
         this.img.src = "";
-        window.removeEventListener("keydown", this.nextOrPrevImg.bind(this));
-        window.removeEventListener("keydown", this.keyClose.bind(this));
+        window.removeEventListener("keydown", this.nextOrPrevImg);
+        window.removeEventListener("keydown", this.keyClose);
       }
     }
   
-    nextOrPrevImg(event) {
+    nextOrPrevImg = (event) => {
       let imgs = this.gallery.querySelectorAll(".gallery__image");
       if (event.key === "ArrowRight") {
         this.nextImg(imgs);
@@ -72,7 +72,7 @@ class Gallery {
       }
     }
   
-    nextImg(images) {
+    nextImg = (images) => {
       if (event.key === "ArrowRight") {
         for (let i = 0; i < images.length; i += 1) {
           if (this.img.src === images[images.length - 1].dataset.source) {
@@ -86,7 +86,7 @@ class Gallery {
       }
     }
   
-    prevImg(images) {
+    prevImg = (images) => {
       if (event.key === "ArrowLeft") {
         for (let i = 0; i < images.length; i += 1) {
           if (this.img.src === images[0].dataset.source) {
@@ -100,7 +100,7 @@ class Gallery {
       }
     }
 
-}
+};
 
 import galleryItems from "../gallery-items.js";
 
@@ -110,5 +110,5 @@ let sunflowersGallery = new Gallery(
   ".lightbox__image"
 );
 
-sunflowersGallery.render(galleryItems);
+sunflowersGallery.init(galleryItems);
 console.log(sunflowersGallery);
